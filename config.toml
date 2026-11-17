@@ -1,0 +1,118 @@
+# zen configuration.
+#
+# This file is compiled into the binary as the defaults. To change settings
+# without rebuilding, copy it to ~/.config/zen/config.toml and edit it there;
+# anything you leave out keeps its default. (`zen --print-config` prints it.)
+#
+# Font and font size belong to your terminal emulator, not to programs running
+# inside it, so set those in the terminal's own settings.
+
+# --- cursor -----------------------------------------------------------------
+cursor = "bar"            # "block", "bar" or "underline"
+cursor_blink = false
+cursor_color = ""         # "#rrggbb", or "" for the terminal's own
+
+# --- colours ----------------------------------------------------------------
+foreground = ""           # "#rrggbb", or "" for the terminal's own
+background = ""
+dim_color = ""            # colour of dimmed text in focus mode; "" = terminal's faint
+
+# --- page -------------------------------------------------------------------
+margin_top = 1            # empty rows above the text
+margin_bottom = 1         # empty rows below
+margin_left = 2           # empty columns to the left
+margin_right = 2          # empty columns to the right
+width = 0                 # widest the text column may get; 0 = all the room there is
+center = true             # when `width` leaves room over, centre the column
+                          # (false = keep it against the left margin)
+
+# --- writing feel -----------------------------------------------------------
+typewriter = false        # true = the line you write on stays put, the text scrolls
+typewriter_position = 50  # where that line sits: 0 = top of the page, 100 = bottom
+focus = "off"             # dim everything except the current "paragraph",
+                          # "sentence" or "line"; "off" = dim nothing
+reflow_width = 0          # line length for the reflow command; 0 = the page width
+
+# --- editing ----------------------------------------------------------------
+tab_width = 4
+soft_tabs = false         # Tab inserts spaces instead of a tab character
+auto_indent = true        # a new line keeps the indentation of the one above
+final_newline = true      # make sure the file ends with a newline when saving
+mouse = true              # click to place the cursor, drag to select, wheel to
+                          # scroll. false = leave the mouse to the terminal
+
+# --- clipboard --------------------------------------------------------------
+system_clipboard = true   # copy/cut/paste use the desktop clipboard;
+                          # false = a clipboard private to zen
+copy_command = ""         # program that receives copied text; "" = find one
+paste_command = ""        # program that prints the clipboard;  "" = find one
+                          # (wl-copy/wl-paste, xclip or xsel)
+
+# --- safety -----------------------------------------------------------------
+recovery = true           # keep unsaved text in a hidden file next to yours and
+                          # offer it back after a crash
+recovery_interval = 5     # seconds between recovery writes
+autosave = false          # true = save by itself once you pause typing
+autosave_delay = 2        # seconds of pause before autosave
+check_disk = true         # refuse to overwrite a file another program changed
+                          # (save a second time to overwrite anyway)
+remember_position = true  # reopen files where you left off
+
+# --- behaviour --------------------------------------------------------------
+# Commands are run by typing a sequence of ordinary keys. The keys of a
+# sequence must follow each other within this many milliseconds; type slower
+# than that and they are just text. 0 = no time limit.
+sequence_timeout = 500
+# Warnings ("unsaved changes", "not found", save errors) appear on the bottom
+# row until the next key press. false = never show them.
+messages = true
+
+# --- key sequences ----------------------------------------------------------
+# Any text works: save = "evera" saves when you type e-v-e-r-a quickly.
+# Give a list for alternatives:  save = [";w", "evera"]
+# Use "" to switch a command off. No sequence may be the start of another.
+[keys]
+save            = ";w"
+save_as         = ";W"
+quit            = ";q"
+force_quit      = ";Q"    # quit and throw away unsaved changes
+save_quit       = ";x"
+undo            = ";u"
+redo            = ";r"
+find            = ";f"
+find_next       = ";n"
+find_prev       = ";N"
+replace         = ";h"    # find and replace: y = yes, n = skip, a = all, q = stop
+goto_line       = ";g"
+select          = ";v"    # start / stop selecting; then move the cursor
+select_all      = ";a"
+copy            = ";c"
+cut             = ";d"
+paste           = ";p"
+delete_line     = ";k"
+duplicate_line  = ";y"
+line_up         = ";["    # move the current line up
+line_down       = ";]"
+paragraph_up    = ";{"    # jump to the blank line above
+paragraph_down  = ";}"
+reflow          = ";j"    # re-wrap the current paragraph to reflow_width
+word_count      = ";#"    # words and characters, of the selection if there is one
+typewriter      = ";t"    # switch typewriter scrolling on / off while writing
+focus           = ";o"    # switch focus dimming on / off while writing
+
+# --- text expansions --------------------------------------------------------
+# Typing the sequence on the left inserts the text on the right.
+# {date} is today (2026-11-17), {time} is now (14:05), and anything with a %
+# inside braces is a strftime format, e.g. "{%A, %d %B %Y}". \n is a new line.
+# Set one to "" to remove it.
+[expand]
+";;date" = "{date}"
+";;time" = "{time}"
+
+# --- shell commands ---------------------------------------------------------
+# Typing the sequence sends the selection (or the whole text when nothing is
+# selected) through the program and replaces it with the program's output.
+# Nothing is defined by default. Examples:
+#   ";;sort" = "sort"
+#   ";;up"   = "tr a-z A-Z"
+[shell]
