@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
 //! zen — a text editor with nothing in it but a cursor.
 //!
 //! The whole editor lives in this file and uses nothing beyond the Rust
@@ -2427,7 +2429,7 @@ usage: zen [options] [file]
 
 Commands are typed as short key sequences (defaults: ;w save, ;q quit,
 ;x save and quit, ;Q quit without saving). Every sequence and every feature
-can be changed in ~/.config/zen/config.toml; see README.md.";
+can be changed in ~/.config/zen/config.toml; see `man zen`.";
 
 fn fail(message: &str) -> ! {
     eprintln!("zen: {message}");

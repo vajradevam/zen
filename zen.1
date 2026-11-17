@@ -1,0 +1,126 @@
+.TH ZEN 1 "2026-11-17" "zen 0.1.0" "User Commands"
+.SH NAME
+zen \- a text editor with nothing in it but a cursor
+.SH SYNOPSIS
+.B zen
+.RI [ options ]
+.RI [ file ]
+.br
+.I command
+.B | zen
+.RI [ file ]
+.SH DESCRIPTION
+.B zen
+is a terminal text editor that shows your text and a cursor and nothing else:
+no status bar, no line numbers, no syntax highlighting.
+.PP
+There are no Ctrl or Alt shortcuts. A command is a sequence of ordinary keys
+typed quickly, such as
+.B ;w
+to save. The keys appear as text while they are typed; when the sequence
+completes they are removed and the command runs. Typed slower than the time
+limit (500 ms by default), a sequence is plain text. A sequence is matched
+wherever it occurs, including inside a word.
+.PP
+The bottom row is used only while a command asks for something or a warning
+is shown, and is empty again on the next key.
+.PP
+Text piped into
+.B zen
+becomes the text being edited.
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-config " \fIpath\fR"
+Use this configuration file instead of the default one.
+.TP
+.B \-\-print\-config
+Print the default configuration, as a starting point for your own.
+.TP
+.BR \-h ", " \-\-help
+Show a short help text.
+.TP
+.BR \-V ", " \-\-version
+Show the version.
+.SH KEY SEQUENCES
+These are the defaults. Every one can be changed or switched off in the
+configuration file.
+.TS
+l l.
+;w	save
+;W	save under a new name
+;q	quit (refuses if there are unsaved changes)
+;Q	quit and throw away unsaved changes
+;x	save and quit
+;u  ;r	undo, redo
+;f	find
+;n  ;N	next, previous match
+;h	find and replace (y yes, n skip, a all, q stop)
+;g	go to a line number
+;{  ;}	jump to the blank line above, below
+;v	start selecting, then move; again to stop
+;a	select all
+;c  ;d  ;p	copy, cut, paste
+;k	delete the current line
+;y	duplicate the current line
+;[  ;]	move the current line up, down
+;j	re-wrap the current paragraph
+;#	word and character count
+;t	typewriter scrolling on or off
+;o	focus dimming on or off
+;;date	insert today's date
+;;time	insert the current time
+.TE
+.PP
+Arrow keys, Home, End, PageUp, PageDown, Ctrl+arrows (by word), Ctrl+Home and
+Ctrl+End (start and end of the text), Shift+arrows (select), Backspace, Delete,
+Alt+Backspace (delete a word), Esc (drop the selection) and the mouse work as
+usual.
+.SH CONFIGURATION
+All settings, key sequences, text expansions and shell commands live in one
+file. To create it:
+.PP
+.RS
+.nf
+mkdir \-p ~/.config/zen
+zen \-\-print\-config > ~/.config/zen/config.toml
+.fi
+.RE
+.PP
+Every setting is explained by a comment beside it. Lines you delete fall back
+to their defaults. A mistake in the file is reported with its line number
+when
+.B zen
+starts.
+.PP
+Font and font size are set in the terminal emulator, not here.
+.SH FILES
+.TP
+.I ~/.config/zen/config.toml
+Your configuration.
+.RI ( $XDG_CONFIG_HOME/zen/config.toml
+if that variable is set.)
+.TP
+.I ~/.local/state/zen/positions
+Where the cursor was in each file, so files reopen where you left them.
+.RI ( $XDG_STATE_HOME/zen
+if that variable is set.)
+.TP
+.IR . name .zen\-recover
+Unsaved text, kept beside the file being edited and offered back after a
+crash. Removed on save. For a text with no name yet it is
+.IR ~/.local/state/zen/unnamed.zen\-recover .
+.SH EXAMPLES
+.TP
+.B zen notes.txt
+Edit, or start, notes.txt.
+.TP
+.B zen
+Start an empty text; saving asks for a name.
+.TP
+.B git log | zen
+Edit the output of a command.
+.SH NOTES
+Files must be UTF\-8 text; anything else is refused rather than risked.
+Linux only.
+.SH LICENSE
+GNU General Public License, version 2.

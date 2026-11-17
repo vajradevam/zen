@@ -3,6 +3,12 @@ name = "zen"
 version = "0.1.0"
 edition = "2021"
 description = "A text editor with nothing in it but a cursor."
+repository = "https://github.com/vajradevam/zen"
+readme = "README.md"
+license = "GPL-2.0-only"
+rust-version = "1.82"
+keywords = ["editor", "terminal", "tui", "writing", "minimal"]
+categories = ["text-editors", "command-line-utilities"]
 
 [dependencies]
 
